@@ -18,7 +18,11 @@ class wavDataset(Dataset):
         self.transform = transform
 
     def __len__(self):
-        pass
+        """
+        The method that returns the length of the dataset.
+        It returns the number of wav files at wavPath with naive globbing"
+        """
+        return len(Path(self.wavPath).glob("*.wav"))
 
     def __getitem__(self, idx):
         pass
