@@ -23,7 +23,7 @@ class wavDataset(Dataset):
         The method that returns the length of the dataset.
         It returns the number of wav files at wavPath with naive globbing"
         """
-        return len(self.wavPath.glob("*.wav"))
+        return len(list(self.wavPath.glob("*.wav")))
 
     def __getitem__(self, idx):
         if self._wav_list is None:
