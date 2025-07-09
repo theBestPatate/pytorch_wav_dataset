@@ -1,5 +1,5 @@
 from torch.utils.data import Dataset, DataLoader
-from torchaudio import transforms, utils
+from torchaudio import transforms, utils, load
 from pathlib import Path
 
 
@@ -12,7 +12,7 @@ class wavDataset(Dataset):
         """
         Arguments:
             wavPath (Path | str): Path to the audio dir with all the wav files
-            transform (callable,optional): Optional transformation to be applied on a sample
+            transform (callable , optional): Optional transformation to be applied on a sample
         """
         self.wavPath = Path(wavPath)
         self.transform = transform
@@ -28,8 +28,12 @@ class wavDataset(Dataset):
     def __getitem__(self, idx):
         if self._wav_list is None:
             self._set_wav_files()
-        return len(self._wav_list)
+        wav_file_path = self._wav_files[idx]
+        return (
+            *load(wav_file_path, normalize=True, backend="soundfile"),
+            wav_file_path,
+        )
 
     def _set_wav_files(self):
-        """Retrieve and cache the list of .wav files."""
-        self._wav_files = list(self.wavPath.glob("*.wav"))
+        """Retrieve and cache the sorted list of .wav files."""
+        self._wav_files = sorted(list(self.wavPath.glob("*.wav")))
