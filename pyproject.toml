@@ -1,0 +1,12 @@
+[project]
+name = "pytorch-wav-dataset"
+version = "0.1.0"
+description = "A small example to show how you can use pytorch's dataset with audio(wav) files"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy<=2.2",
+    "soundfile>=0.13.1",
+    "torch>=2.7.1",
+    "torchaudio>=2.7.1",
+]
